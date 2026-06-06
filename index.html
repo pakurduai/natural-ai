@@ -472,6 +472,8 @@
       if (!Array.isArray(logs)) {
         logs = [];
       }
+      // Clean null or corrupted entries
+      logs = logs.filter(l => l && typeof l === 'object');
 
       if (logs.length === 0) {
         // Pre-populate with some dummy logs to match the screenshot UI
@@ -499,10 +501,10 @@
           // Normalize name and find match
           const matchingFood = DEFAULT_FOODS.find(f => normalizeName(f.name) === normalizeName(l.name));
           if (matchingFood) {
-            // Update image to base64 if not already matching
-            if (l.img !== matchingFood.img || !l.fallback) {
+            // Update image to base64 if it's currently a relative path or not matching
+            if (l.img !== matchingFood.img || !l.img.startsWith('data:image')) {
               l.img = matchingFood.img;
-              l.fallback = matchingFood.fallback || "";
+              l.fallback = 'meal_0.png';
               updated = true;
             }
             // Ensure nutrient values are valid numbers
@@ -512,11 +514,11 @@
             if (typeof l.f !== 'number') { l.f = matchingFood.f; updated = true; }
           } else {
             // If it's a legacy entry without matching food, verify it has essential fields
-            if (!l.img || typeof l.kcal !== 'number') {
+            if (!l.img || !l.img.startsWith('data:image') || typeof l.kcal !== 'number') {
               const defaultFood = DEFAULT_FOODS[0];
               l.name = defaultFood.name;
               l.img = defaultFood.img;
-              l.fallback = defaultFood.fallback || "";
+              l.fallback = 'meal_0.png';
               l.kcal = defaultFood.kcal;
               l.p = defaultFood.p;
               l.c = defaultFood.c;
@@ -626,7 +628,7 @@
         const timeStr = safeTimeString(l.date);
         list.innerHTML += `
           <div class="meal-card">
-            <img src="${l.img}" onerror="this.onerror=null; this.src='${l.fallback || 'images/meal_0.png'}';" class="meal-img">
+            <img src="${l.img}" onerror="this.onerror=null; this.src='${l.fallback || 'meal_0.png'}';" class="meal-img">
             <div class="meal-info">
               <div class="meal-name">${l.name}</div>
               <div class="meal-meta">Meal • ${timeStr}</div>
@@ -742,7 +744,7 @@
         const timeStr = safeTimeString(l.date);
         list.innerHTML += `
           <div class="history-card">
-            <img src="${l.img}" onerror="this.onerror=null; this.src='${l.fallback || 'images/meal_0.png'}';">
+            <img src="${l.img}" onerror="this.onerror=null; this.src='${l.fallback || 'meal_0.png'}';">
             <div class="h-info">
               <div class="h-title">${l.name}</div>
               <div class="h-meta">Meal • ${timeStr}</div>
