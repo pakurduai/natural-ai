@@ -460,9 +460,9 @@
 
     function initDB() {
       // Force clear old localstorage cache once to ensure new Base64 images are loaded
-      if (!localStorage.getItem('foods_base64_v3')) {
+      if (!localStorage.getItem('foods_base64_v4')) {
         localStorage.clear();
-        localStorage.setItem('foods_base64_v3', 'true');
+        localStorage.setItem('foods_base64_v4', 'true');
       }
 
       // Force update foods to load the new local images automatically
@@ -554,8 +554,8 @@
       return isNaN(d.getTime()) ? "Unknown Time" : d.toLocaleString([], {month:'short', day:'numeric', hour: '2-digit', minute:'2-digit'});
     }
 
-    function getFoods() { return JSON.parse(localStorage.getItem('foods')); }
-    function getLogs() { return JSON.parse(localStorage.getItem('logs')); }
+    function getFoods() { return JSON.parse(localStorage.getItem('foods')) || []; }
+    function getLogs() { return JSON.parse(localStorage.getItem('logs')) || []; }
     function saveLog(log) {
       const logs = getLogs();
       logs.unshift(log);
@@ -577,8 +577,10 @@
       if(targetNav) targetNav.classList.add('active');
 
       const fab = document.getElementById('fab-scan');
-      if(hash === '#dashboard') fab.style.display = 'flex';
-      else fab.style.display = 'none';
+      if (fab) {
+        if(hash === '#dashboard') fab.style.display = 'flex';
+        else fab.style.display = 'none';
+      }
       
       if(hash === '#dashboard') updateDashboard();
       if(hash === '#history') renderHistory();
