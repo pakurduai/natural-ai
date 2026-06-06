@@ -1,0 +1,10 @@
+Build a complete mobile-first web app called "NaturalAI" exactly matching these 3 design screenshots. Single HTML file, vanilla JavaScript, no frameworks, localStorage for data storage, Android WebView compatible.
+DESIGN: Match colors, fonts, layout, and spacing exactly as shown in uploaded images. Pure black background #000000, neon green #39FF14 accents, white text, Inter font.
+USER SCREENS:
+Screen 1 — Dashboard: Top bar with leaf icon + NaturalAI branding + bell and profile icons. Large SVG circular calorie ring showing remaining kcal. Three macro bars for Protein, Carbs, Fat. Water intake graph with day markers. Recent Meals section with food thumbnails. Green SCAN FOOD button. Bottom navigation bar.
+Screen 2 — Food Scanner: Camera viewfinder with green corner brackets and laser scan animation. Upload from Gallery file input. Result card with food name, calories, nutrition breakdown, green Save to Log button.
+Screen 3 — Meal History: Filter tabs Today / This Week / All Time. Daily calorie summary. Scrollable meal cards with food image, name, time, calories, nutrition row.
+ADMIN PANEL at /admin password admin123:
+Food Database Manager with add, edit, delete foods and image upload. Image Manager with grid view and delete option. User Logs viewer. App Settings panel.
+FOOD DATABASE: Preload these 10 foods: Berry Oatmeal 400kcal P18g C54g F15g, Grilled Chicken Bowl 560kcal P38g C62g F16g, Blueberry Smoothie 230kcal P10g C32g F6g, Avocado Toast 310kcal P9g C30g F17g, Baked Salmon 380kcal P42g C8g F22g, Caesar Salad 290kcal P14g C18g F19g, Banana Pancakes 340kcal P12g C52g F10g, Greek Yogurt Bowl 220kcal P20g C28g F4g, Quinoa Power Bowl 420kcal P16g C58g F14g, Veggie Stir Fry 280kcal P11g C38g F9g.
+All data in localStorage. Mobile optimized max width 430px. Smooth CSS transitions. Bottom nav highlights active screen.
