@@ -4,3 +4,5 @@ www/
 .DS_Store
 enable_pages.ps1
 download_build.py
+
+.vercel

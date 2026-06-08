@@ -1,0 +1,12 @@
+android/
+node_modules/
+app-debug.apk
+app-release.aab
+*.py
+*.ps1
+.github/
+.git/
+www/
+brain/
+*voice*.mp3
+*.txt
