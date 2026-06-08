@@ -1,0 +1,49 @@
+{
+  "name": "Natural AI - Smart Nutrition & Drink Safety",
+  "short_name": "NaturalAI",
+  "description": "AI-powered food calorie scanner and drink safety analyzer with health tracking",
+  "start_url": "/natural-ai/",
+  "scope": "/natural-ai/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0A0F2D",
+  "theme_color": "#39FF14",
+  "lang": "en",
+  "categories": ["health", "fitness", "food"],
+  "icons": [
+    {
+      "src": "logo.jpeg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo.jpeg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "dashboard.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "label": "NaturalAI Dashboard"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Food Scanner",
+      "short_name": "Scanner",
+      "url": "/natural-ai/#scanner",
+      "icons": [{ "src": "logo.jpeg", "sizes": "96x96", "type": "image/jpeg" }]
+    },
+    {
+      "name": "Meal History",
+      "short_name": "History",
+      "url": "/natural-ai/#history",
+      "icons": [{ "src": "logo.jpeg", "sizes": "96x96", "type": "image/jpeg" }]
+    }
+  ]
+}
