@@ -5,11 +5,11 @@ on:
     branches:
       - main
       - master
-  workflow_dispatch: # Allows manual triggering from the Actions tab
+  workflow_dispatch:
 
 jobs:
   build:
-    name: Build APK and AAB
+    name: Build Signed APK and AAB
     runs-on: ubuntu-latest
 
     steps:
@@ -41,26 +41,40 @@ jobs:
           fi
           npx cap sync android
 
-      - name: Build APK (Debug)
+      - name: Decode Keystore from Secret
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/naturalai-release.jks
+
+      - name: Build Signed Release APK
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
           cd android
           chmod +x gradlew
-          ./gradlew assembleDebug
+          ./gradlew assembleRelease
 
-      - name: Build AAB (Release Unsigned)
+      - name: Build Signed Release AAB
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
           cd android
           chmod +x gradlew
           ./gradlew bundleRelease
 
-      - name: Upload Debug APK
+      - name: Upload Signed Release APK
         uses: actions/upload-artifact@v4
         with:
-          name: debug-apk
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          name: signed-release-apk
+          path: android/app/build/outputs/apk/release/app-release.apk
 
-      - name: Upload Release AAB
+      - name: Upload Signed Release AAB
         uses: actions/upload-artifact@v4
         with:
-          name: release-aab
+          name: signed-release-aab
           path: android/app/build/outputs/bundle/release/*.aab
