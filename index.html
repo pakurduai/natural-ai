@@ -1677,20 +1677,16 @@
     function stopScanSound() {
       try {
         shouldPlayScan = false;
+        // Let the scan audio finish naturally (it's exactly 3 seconds, loop=false)
+        // Don't fade or pause - just reset when it ends on its own
         if (scanAudio) {
           if (fadeInterval) clearInterval(fadeInterval);
-          let vol = scanAudio.volume;
-          fadeInterval = setInterval(() => {
-            vol -= 0.1;
-            if (vol <= 0) {
-              clearInterval(fadeInterval);
-              scanAudio.pause();
-              scanAudio.currentTime = 0;
-              scanAudio.volume = 1.0; // Reset for next play
-            } else {
-              scanAudio.volume = vol;
-            }
-          }, 20); // 200ms fade-out (10 steps of 20ms)
+          fadeInterval = null;
+          scanAudio.addEventListener('ended', function onEnded() {
+            scanAudio.removeEventListener('ended', onEnded);
+            scanAudio.currentTime = 0;
+            scanAudio.volume = 1.0;
+          }, { once: true });
         }
       } catch (e) { }
     }
